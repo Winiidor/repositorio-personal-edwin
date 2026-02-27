@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #f0f0f0; }
+        .hidden { display: none; }
+        .box { background: white; padding: 20px; border-radius: 10px; display: inline-block; margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div id="auth-ui">
+            <h2>Joc de Clics</h2>
+            <input id="u" placeholder="Usuari"><br><br>
+            <input id="p" type="password" placeholder="Contrasenya"><br><br>
+            <button onclick="auth(true)">Entrar</button>
+            <button onclick="auth(false)">Registrar-se</button>
+        </div>
+
+        <div id="game-ui" class="hidden">
+            <h3>Hola <span id="user-display"></span>!</h3>
+            <h1 id="score-display">0</h1>
+            <button onclick="points++" style="padding: 20px;">CLIC!</button>
+            <button onclick="save()">Guardar i veure Ranking</button>
+            <div id="leaderboard"></div>
+        </div>
+    </div>
+
+    <script>
+        let points = 0, currentUser = "";
+        const scoreDisplay = document.getElementById('score-display');
+        setInterval(() => scoreDisplay.innerText = points, 100);
+
+        async function auth(isLogin) {
+            const res = await fetch('/auth', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: u.value, password: p.value, isLogin})
+            });
+            const data = await res.json();
+            if (data.success) {
+                currentUser = u.value;
+                document.getElementById('auth-ui').classList.add('hidden');
+                document.getElementById('game-ui').classList.remove('hidden');
+                document.getElementById('user-display').innerText = currentUser;
+            } else { alert("Error en l'accés"); }
+        }
+
+        async function save() {
+            await fetch('/score', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: currentUser, score: points})
+            });
+            const res = await fetch('/leaderboard');
+            const scores = await res.json();
+            document.getElementById('leaderboard').innerHTML = "<h4>Top 5</h4>" + 
+                scores.map(s => `<p>${s.username}: ${s.score}</p>`).join('');
+        }
+    </script>
+</body>
+</html>
