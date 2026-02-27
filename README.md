@@ -71,5 +71,3 @@ Sigue estos pasos para levantar el proyecto en menos de un minuto:
 * Si deseas reiniciar los datos por completo, puedes ejecutar `docker-compose down -v` (esto borrará los volúmenes).
 
 ---
-
-Desarrollado con ❤️ para aprender Docker.
