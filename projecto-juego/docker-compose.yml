@@ -1,0 +1,22 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://user:pass@db:5432/gamedb
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=gamedb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d gamedb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
