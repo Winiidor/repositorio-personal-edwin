@@ -1,61 +1,75 @@
-🖱️ Docker Clicker Game
+# 🎮 Docker Clicker Game
 
-¡Bienvenido! Este es un proyecto de juego full-stack minimalista diseñado para demostrar la orquestación de contenedores mediante Docker Compose. El sistema incluye gestión de usuarios (registro/login) y una tabla de puntuaciones persistente.
-🚀 Características
+¡Bienvenido al **Docker Clicker Game**! Este es un proyecto didáctico diseñado para mostrar cómo orquestar una aplicación web completa (Frontend, Backend y Base de Datos) utilizando **Docker Compose**.
 
-    Frontend: Interfaz web sencilla integrada en el servidor.
+El juego es sencillo: regístrate, haz todos los clics que puedas y guarda tu puntuación para aparecer en el ranking global.
 
-    Backend: API REST construida con Node.js y Express.
+---
 
-    Seguridad: Cifrado de contraseñas mediante bcryptjs.
+## 🚀 Características principales
 
-    Base de Datos: Persistencia de datos con PostgreSQL.
+* **Autenticación Segura:** Registro e inicio de sesión con cifrado de contraseñas mediante `bcryptjs`.
+* **Persistencia de Datos:** Uso de una base de datos **PostgreSQL** para almacenar usuarios y puntuaciones.
+* **Contenedores Linux:** Arquitectura basada en microservicios totalmente aislados.
+* **Leaderboard:** Ranking en tiempo real con los 5 mejores jugadores.
 
-    Infraestructura: Despliegue automatizado con Docker Compose.
+---
 
-🏗️ Arquitectura del Sistema
+## 🛠️ Requisitos previos
 
-El proyecto se divide en dos servicios principales:
+Antes de empezar, asegúrate de tener instalado en tu máquina:
 
-    app: El contenedor Linux que corre el servidor Node.js.
+* [Docker](https://www.docker.com/get-started)
+* [Docker Compose](https://docs.docker.com/compose/install/)
 
-    db: El motor de base de datos PostgreSQL que almacena usuarios y récords.
+---
 
-🛠️ Instalación y Despliegue
+## 📦 Instalación y Despliegue
 
-Para ejecutar este proyecto, solo necesitas tener instalados Docker y Docker Compose.
+Sigue estos pasos para levantar el proyecto en menos de un minuto:
 
-    Clona el repositorio:
-    Bash
+1.  **Clona este repositorio:**
+    ```bash
+    git clone [https://github.com/tu-usuario/tu-repositorio.git](https://github.com/tu-usuario/tu-repositorio.git)
+    cd tu-repositorio
+    ```
 
-    git clone https://github.com/tu-usuario/nombre-del-repo.git
-    cd nombre-del-repo
-
-    Levanta los contenedores:
-    Bash
-
+2.  **Construye y levanta los contenedores:**
+    ```bash
     docker-compose up --build
+    ```
 
-    ¡A jugar!:
-    Abre tu navegador en http://localhost:3000.
+3.  **Accede al juego:**
+    Abre tu navegador y ve a: `http://localhost:3000`
 
-📂 Estructura del Proyecto
-Plaintext
+---
 
-├── public/
-│   └── index.html      # Interfaz del juego y lógica cliente
-├── Dockerfile          # Receta para la imagen de Node.js
-├── docker-compose.yml  # Orquestación de App y Base de Datos
-├── package.json        # Dependencias (Express, PG, Bcryptjs)
-├── server.js           # Lógica del servidor y conexión a DB
-└── README.md           # Estas instrucciones que estás leyendo
+## 📂 Estructura del Proyecto
 
-📝 Notas de Configuración
+* `server.js`: Servidor API con Express y lógica de conexión a la base de datos.
+* `public/index.html`: Interfaz de usuario y lógica del juego (vanilla JS).
+* `Dockerfile`: Configuración de la imagen de Node.js.
+* `docker-compose.yml`: Definición de los servicios de aplicación y base de datos.
+* `package.json`: Dependencias del proyecto (`express`, `pg`, `bcryptjs`).
 
-    Variables de entorno: La conexión se gestiona mediante la variable DATABASE_URL definida en el docker-compose.yml.
+---
 
-    Persistencia: Si deseas que los datos sobrevivan al borrar los contenedores, recuerda añadir un volumen a la base de datos en el archivo compose.
+## ⚙️ Stack Tecnológico
 
-🤝 Contribuciones
+| Componente | Tecnología |
+| :--- | :--- |
+| **Backend** | Node.js (Express) |
+| **Base de datos** | PostgreSQL 15 |
+| **Seguridad** | Bcryptjs (Hashing de contraseñas) |
+| **Infraestructura** | Docker & Docker Compose |
 
-Si tienes ideas para mejorar la mecánica del juego (¡tal vez un Snake o un Tetris!), siéntete libre de abrir un Pull Request o una Issue.
+---
+
+## 📝 Notas adicionales
+
+* La base de datos se inicializa automáticamente al arrancar el contenedor por primera vez.
+* Si deseas reiniciar los datos por completo, puedes ejecutar `docker-compose down -v` (esto borrará los volúmenes).
+
+---
+
+Desarrollado con ❤️ para aprender Docker.
